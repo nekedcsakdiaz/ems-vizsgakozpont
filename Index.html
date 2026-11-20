@@ -5,637 +5,180 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#080d22">
 <title>EMS Vizsgaközpont</title>
-
 <style>
 *{box-sizing:border-box}
-body{
- margin:0;
- background:#080d22;
- color:#f2f5ff;
- font-family:Arial,sans-serif;
-}
-.app{
- max-width:850px;
- margin:auto;
- padding:15px;
-}
-header{
- display:flex;
- justify-content:space-between;
- align-items:center;
- margin:12px 0 22px;
-}
+body{margin:0;background:#080d22;color:#f2f5ff;font-family:Arial,sans-serif}
+button{font:inherit}
+button:focus-visible{outline:3px solid #ffd477;outline-offset:2px}
+.app{max-width:850px;margin:auto;padding:15px}
+header{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:12px 0 22px}
 h1{font-size:25px;margin:0}
 .subtitle{color:#9ba8c7;font-size:12px;margin-top:7px}
-.version{
- background:#17254b;
- padding:8px;
- border-radius:9px;
- font-size:11px;
-}
-.tabs{
- display:flex;
- gap:8px;
- background:#101936;
- padding:5px;
- border-radius:12px;
- margin-bottom:20px;
-}
-.tabs button{
- flex:1;
- padding:13px 5px;
- border:0;
- border-radius:9px;
- background:transparent;
- color:#9ba8c7;
- font-weight:bold;
-}
-.tabs button.active{
- background:#3478ff;
- color:white;
-}
-.section{
- color:#aebada;
- font-size:12px;
- font-weight:bold;
- margin:20px 0 10px;
-}
-.cards{
- display:grid;
- grid-template-columns:repeat(2,minmax(0,1fr));
- gap:10px;
-}
-.exam{
- background:#151e3e;
- border:1.5px solid #36d69a;
- color:white;
- padding:13px 10px;
- min-height:145px;
- text-align:left;
- border-radius:3px;
- cursor:pointer;
-}
-.exam:disabled{
- opacity:.4;
- border-color:#58617c;
- cursor:not-allowed;
-}
-.exam strong{
- display:block;
- font-size:14px;
- margin-bottom:12px;
-}
-.exam small{
- color:#aebada;
- font-size:11px;
-}
-.progress{
- height:5px;
- background:#303c60;
- margin:12px 0 7px;
- border-radius:10px;
- overflow:hidden;
-}
-.progress div{
- height:100%;
- background:#36d69a;
-}
-.done{
- color:#43dda5;
- font-size:12px;
- font-weight:bold;
-}
-.lock{
- color:#ffd477;
- font-size:11px;
-}
-.info{
- background:#172044;
- border-radius:10px;
- padding:12px;
- margin-top:20px;
- font-size:11px;
- color:#bac7e3;
- line-height:1.5;
-}
-.screen{display:none}
-.screen.active{display:block}
-.back{
- background:#17254b;
- border:1px solid #35466e;
- color:white;
- padding:12px;
- border-radius:9px;
- margin-bottom:15px;
-}
-.question{
- background:#131e40;
- padding:16px;
- border:1px solid #35466e;
- border-radius:12px;
- margin:15px 0;
-}
-.question h3{
- font-size:16px;
- line-height:1.4;
-}
-.answer{
- width:100%;
- padding:14px;
- margin:5px 0;
- text-align:left;
- border:1px solid #455477;
- border-radius:9px;
- background:#0d1733;
- color:white;
- font-size:14px;
-}
-.answer.selected{
- border-color:#36d69a;
- background:#17443e;
-}
-.mainbtn{
- width:100%;
- padding:15px;
- border:0;
- border-radius:10px;
- background:#3478ff;
- color:white;
- font-weight:bold;
- font-size:15px;
- margin-top:12px;
-}
-.mainbtn:disabled{opacity:.4}
-.result{
- background:#123a32;
- border:1px solid #36d69a;
- padding:18px;
- border-radius:12px;
- margin-top:15px;
-}
-.result h2{margin-top:0}
-.result strong{
- font-size:35px;
- color:#43dda5;
-}
-footer{
- text-align:center;
- color:#68799e;
- font-size:10px;
- padding:25px 5px;
-}
-@media(max-width:360px){
- .cards{grid-template-columns:1fr}
- h1{font-size:21px}
-}
-@media(min-width:650px){
- .cards{grid-template-columns:repeat(3,1fr)}
-}
+.version{background:#17254b;padding:8px;border-radius:9px;font-size:11px;white-space:nowrap}
+.tabs{display:flex;gap:8px;background:#101936;padding:5px;border-radius:12px;margin-bottom:20px}
+.tabs button{flex:1;padding:13px 5px;border:0;border-radius:9px;background:transparent;color:#9ba8c7;font-weight:bold;cursor:pointer}
+.tabs button.active{background:#3478ff;color:white}
+.section{color:#aebada;font-size:12px;font-weight:bold;margin:20px 0 10px}
+.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.exam{width:100%;background:#151e3e;border:1.5px solid #36d69a;color:white;padding:13px 10px;min-height:145px;text-align:left;border-radius:10px;cursor:pointer}
+.exam:disabled{opacity:.5;border-color:#58617c;cursor:not-allowed}
+.exam strong{display:block;font-size:14px;margin-bottom:12px}
+.exam small{color:#aebada;font-size:11px}
+.progress{height:5px;background:#303c60;margin:12px 0 7px;border-radius:10px;overflow:hidden}
+.progress div{height:100%;background:#36d69a}
+.done{color:#43dda5;font-size:12px;font-weight:bold}
+.lock{color:#ffd477;font-size:11px}
+.info{background:#172044;border-radius:10px;padding:12px;margin-top:20px;font-size:11px;color:#bac7e3;line-height:1.5}
+.screen{display:none}.screen.active{display:block}
+.back{background:#17254b;border:1px solid #35466e;color:white;padding:12px;border-radius:9px;margin-bottom:15px;cursor:pointer}
+.question{background:#131e40;padding:16px;border:1px solid #35466e;border-radius:12px;margin:15px 0}
+.question h3{font-size:16px;line-height:1.4}
+.answer{width:100%;padding:14px;margin:5px 0;text-align:left;border:1px solid #455477;border-radius:9px;background:#0d1733;color:white;font-size:14px;cursor:pointer}
+.answer.selected{border-color:#36d69a;background:#17443e}
+.mainbtn{width:100%;padding:15px;border:0;border-radius:10px;background:#3478ff;color:white;font-weight:bold;font-size:15px;margin-top:12px;cursor:pointer}
+.mainbtn:disabled{opacity:.4;cursor:not-allowed}
+.result{background:#123a32;border:1px solid #36d69a;padding:18px;border-radius:12px;margin-top:15px}
+.result h2{margin-top:0}.result strong{font-size:35px;color:#43dda5}
+footer{text-align:center;color:#68799e;font-size:10px;padding:25px 5px}
+@media(max-width:420px){header{align-items:flex-start}h1{font-size:21px}.version{font-size:10px;padding:7px}}
+@media(max-width:360px){.cards{grid-template-columns:1fr}}
+@media(min-width:650px){.cards{grid-template-columns:repeat(3,minmax(0,1fr))}}
 </style>
 </head>
-
 <body>
 <div class="app">
-
 <header>
- <div>
-  <h1>🚑 EMS VIZSGAKÖZPONT</h1>
-  <div class="subtitle">
-   Mentőszolgálati gyakorló vizsgarendszer
-  </div>
- </div>
+ <div><h1>🚑 EMS VIZSGAKÖZPONT</h1><div class="subtitle">Mentőszolgálati gyakorló vizsgarendszer</div></div>
  <div class="version">BÉTA 1.0</div>
 </header>
-
 <div id="home" class="screen active">
-
- <div class="tabs">
-  <button class="active" id="examTab">VIZSGÁK</button>
-  <button id="gameTab">MINIGAMEK</button>
+ <div class="tabs" aria-label="Főmenü">
+  <button type="button" class="active" id="examTab" aria-pressed="true">VIZSGÁK</button>
+  <button type="button" id="gameTab" aria-pressed="false">MINIGAMEK</button>
  </div>
-
  <div id="examPage">
-
-  <div class="section">KOMPETENCIA VIZSGÁK</div>
-  <div class="cards" id="competency"></div>
-
-  <div class="section">KIEGÉSZÍTŐ VIZSGÁK</div>
-  <div class="cards" id="additional"></div>
-
+  <div class="section">KOMPETENCIA VIZSGÁK</div><div class="cards" id="competency"></div>
+  <div class="section">KIEGÉSZÍTŐ VIZSGÁK</div><div class="cards" id="additional"></div>
  </div>
-
- <div id="gamePage" hidden>
-  <div class="info">
-   A minijátékok a következő fejlesztési
-   verzióban érkeznek.
-  </div>
- </div>
-
- <div class="info">
-  ℹ️ A rendszer oktatási célú gyakorlóteszt.
-  Nem hivatalos OMSZ-vizsga, nem ad szakmai
-  kompetenciát vagy egészségügyi jogosultságot.
- </div>
-
+ <div id="gamePage" hidden><div class="info">A minijátékok a következő fejlesztési verzióban érkeznek.</div></div>
+ <div class="info">ℹ️ A rendszer oktatási célú gyakorlóteszt. Nem hivatalos OMSZ-vizsga, nem ad szakmai kompetenciát vagy egészségügyi jogosultságot.</div>
 </div>
-
 <div id="quiz" class="screen">
-
- <button class="back" onclick="goHome()">
-  ← Vissza
- </button>
-
- <h2 id="quizName"></h2>
- <div id="quizInfo" class="subtitle"></div>
-
- <div class="progress">
-  <div id="quizBar" style="width:0%"></div>
- </div>
-
+ <button type="button" class="back" id="backBtn">← Vissza</button>
+ <h2 id="quizName"></h2><div id="quizInfo" class="subtitle"></div>
+ <div class="progress" aria-label="Haladás"><div id="quizBar" style="width:0%"></div></div>
  <div id="questionArea"></div>
-
- <button class="mainbtn" id="nextBtn" disabled>
-  Következő kérdés
- </button>
-
+ <button type="button" class="mainbtn" id="nextBtn" disabled>Következő kérdés</button>
  <div id="resultArea"></div>
-
 </div>
-
-<footer>
- EMS VIZSGAKÖZPONT · MOBILVERZIÓ
-</footer>
-
+<footer>EMS VIZSGAKÖZPONT · MOBILVERZIÓ</footer>
 </div>
-
 <script>
+'use strict';
 const PASS = 75;
-
 const exams = [
-{
- id:"a",
- name:"„A” kompetens ápoló",
- group:"competency",
- questions:[
-  ["Mi a betegazonosítás célja?",[
-   "A betegbiztonság támogatása",
-   "Az adminisztráció elhagyása",
-   "A dokumentáció kiváltása"
-  ],0],
-  ["Mit kell tenni, ha a beteg állapota romlik?",[
-   "Figyelmen kívül hagyni",
-   "Jelezni és segítséget kérni a helyi eljárásrend szerint",
-   "Várni a műszak végéig"
-  ],1],
-  ["Miért fontos a dokumentáció?",[
-   "A betegellátás nyomon követhetősége miatt",
-   "Csak statisztikához",
-   "Nem fontos"
-  ],0]
- ]
-},
-{
- id:"b",
- name:"„B” kompetens ápoló",
- group:"competency",
- questions:[
-  ["Mi a betegátadás célja?",[
-   "Fontos információk átadása",
-   "A dokumentáció elhagyása",
-   "Az ellátás késleltetése"
-  ],0],
-  ["Mi az infekciókontroll?",[
-   "Fertőzések megelőzése",
-   "Betegazonosítás",
-   "Adminisztráció"
-  ],0],
-  ["Mit teszel sérült eszköz esetén?",[
-   "Használod tovább",
-   "Jelzed és nem használod",
-   "Elrejted"
-  ],1]
- ]
-},
-{
- id:"mt",
- name:"Mentőtiszt",
- group:"competency",
- questions:[
-  ["Miért fontos az állapot ismételt felmérése?",[
-   "A beteg állapota változhat",
-   "Csak adminisztráció",
-   "Nem szükséges"
-  ],0],
-  ["Mit teszel ellentmondó mérési adatok esetén?",[
-   "Figyelmen kívül hagyod",
-   "Ellenőrzöd és szakmai segítséget kérsz",
-   "Találgatsz"
-  ],1],
-  ["Mi a strukturált betegátadás célja?",[
-   "Az információk pontos átadása",
-   "Az információk elhagyása",
-   "A dokumentáció megszüntetése"
-  ],0]
- ]
-},
-{
- id:"mo",
- name:"Mentőorvos",
- group:"competency",
- questions:[
-  ["Mire szolgál a szakmai protokoll?",[
-   "A biztonságos, szabályozott ellátás támogatására",
-   "A dokumentáció megszüntetésére",
-   "A betegazonosítás kiváltására"
-  ],0],
-  ["Mikor kérünk szakmai konzíliumot?",[
-   "Ha szakmailag indokolt",
-   "Soha",
-   "Csak műszak végén"
-  ],0],
-  ["Mi a betegbiztonsági jelentés célja?",[
-   "A tanulás és megelőzés",
-   "A hibák eltitkolása",
-   "Az adminisztráció megszüntetése"
-  ],0]
- ]
-},
-{
- id:"rx",
- name:"Gyógyszervizsga",
- group:"additional",
- requires:["a","b","mt","mo"],
- questions:[
-  ["Mit teszel gyógyszerrel kapcsolatos bizonytalanság esetén?",[
-   "Ellenőrzést és megfelelő szakmai segítséget kérsz",
-   "Találomra választasz",
-   "Más beteg adatait használod"
-  ],0],
-  ["Miért fontos a gyógyszerelés dokumentálása?",[
-   "A nyomon követhetőség miatt",
-   "Nem fontos",
-   "Csak készletellenőrzéshez"
-  ],0],
-  ["Miért fontos a betegazonosság ellenőrzése?",[
-   "A téves betegnek történő ellátás megelőzéséhez",
-   "Csak adminisztráció",
-   "Nem szükséges"
-  ],0]
- ]
-},
-{
- id:"rsi",
- name:"RSI vizsga",
- group:"additional",
- requires:["mt","mo","rx"],
- questions:[
-  ["Mit jelent az RSI rövidítés?",[
-   "Rapid Sequence Intubation",
-   "Routine Safety Inspection",
-   "Respiratory Status Index"
-  ],0],
-  ["Mi a képzés egyik alapvető célja?",[
-   "Betegbiztonság és csapatmunka",
-   "Felügyelet nélküli beavatkozás",
-   "Monitorozás elhagyása"
-  ],0],
-  ["Mit teszel bizonytalanság esetén?",[
-   "Kommunikálsz és segítséget kérsz",
-   "Elhallgatod",
-   "Találgatsz"
-  ],0]
- ]
-}
+ {id:'a',name:'„A” kompetens ápoló',group:'competency',questions:[
+  ['Mi a betegazonosítás célja?',['A betegbiztonság támogatása','Az adminisztráció elhagyása','A dokumentáció kiváltása'],0],
+  ['Mit kell tenni, ha a beteg állapota romlik?',['Figyelmen kívül hagyni','Jelezni és segítséget kérni a helyi eljárásrend szerint','Várni a műszak végéig'],1],
+  ['Miért fontos a dokumentáció?',['A betegellátás nyomon követhetősége miatt','Csak statisztikához','Nem fontos'],0]
+ ]},
+ {id:'b',name:'„B” kompetens ápoló',group:'competency',questions:[
+  ['Mi a betegátadás célja?',['Fontos információk átadása','A dokumentáció elhagyása','Az ellátás késleltetése'],0],
+  ['Mi az infekciókontroll?',['Fertőzések megelőzése','Betegazonosítás','Adminisztráció'],0],
+  ['Mit teszel sérült eszköz esetén?',['Használod tovább','Jelzed és nem használod','Elrejted'],1]
+ ]},
+ {id:'mt',name:'Mentőtiszt',group:'competency',questions:[
+  ['Miért fontos az állapot ismételt felmérése?',['A beteg állapota változhat','Csak adminisztráció','Nem szükséges'],0],
+  ['Mit teszel ellentmondó mérési adatok esetén?',['Figyelmen kívül hagyod','Ellenőrzöd és szakmai segítséget kérsz','Találgatsz'],1],
+  ['Mi a strukturált betegátadás célja?',['Az információk pontos átadása','Az információk elhagyása','A dokumentáció megszüntetése'],0]
+ ]},
+ {id:'mo',name:'Mentőorvos',group:'competency',questions:[
+  ['Mire szolgál a szakmai protokoll?',['A biztonságos, szabályozott ellátás támogatására','A dokumentáció megszüntetésére','A betegazonosítás kiváltására'],0],
+  ['Mikor kérünk szakmai konzíliumot?',['Ha szakmailag indokolt','Soha','Csak műszak végén'],0],
+  ['Mi a betegbiztonsági jelentés célja?',['A tanulás és megelőzés','A hibák eltitkolása','Az adminisztráció megszüntetése'],0]
+ ]},
+ {id:'rx',name:'Gyógyszervizsga',group:'additional',requires:['a','b','mt','mo'],questions:[
+  ['Mit teszel gyógyszerrel kapcsolatos bizonytalanság esetén?',['Ellenőrzést és megfelelő szakmai segítséget kérsz','Találomra választasz','Más beteg adatait használod'],0],
+  ['Miért fontos a gyógyszerelés dokumentálása?',['A nyomon követhetőség miatt','Nem fontos','Csak készletellenőrzéshez'],0],
+  ['Miért fontos a betegazonosság ellenőrzése?',['A téves betegnek történő ellátás megelőzéséhez','Csak adminisztráció','Nem szükséges'],0]
+ ]},
+ {id:'rsi',name:'RSI vizsga',group:'additional',requires:['mt','mo','rx'],questions:[
+  ['Mit jelent az RSI rövidítés?',['Rapid Sequence Intubation','Routine Safety Inspection','Respiratory Status Index'],0],
+  ['Mi a képzés egyik alapvető célja?',['Betegbiztonság és csapatmunka','Felügyelet nélküli beavatkozás','Monitorozás elhagyása'],0],
+  ['Mit teszel bizonytalanság esetén?',['Kommunikálsz és segítséget kérsz','Elhallgatod','Találgatsz'],0]
+ ]}
 ];
-
-let progress =
- JSON.parse(localStorage.getItem("emsProgress") || "{}");
-
-let currentExam = null;
-let questionIndex = 0;
-let score = 0;
-let selected = null;
-
-function passed(id){
- return progress[id] &&
- progress[id].percent >= PASS;
+function loadProgress(){
+ try{const value=JSON.parse(localStorage.getItem('emsProgress')||'{}');return value&&typeof value==='object'&&!Array.isArray(value)?value:{}}
+ catch(error){return {}}
 }
-
-function unlocked(exam){
- return !exam.requires ||
- exam.requires.every(passed);
-}
-
+let progress=loadProgress();
+let currentExam=null,questionIndex=0,score=0,selected=null;
+function passed(id){return Boolean(progress[id]&&Number(progress[id].percent)>=PASS)}
+function unlocked(exam){return !exam.requires||exam.requires.every(id=>passed(id))}
 function renderCards(){
-
  function card(exam){
-  const data = progress[exam.id];
-  const percent = data ? data.percent : 0;
-  const open = unlocked(exam);
-
-  return `
-   <button class="exam"
-    ${open ? "" : "disabled"}
-    onclick="startExam('${exam.id}')">
-
-    <strong>✦ ${exam.name}</strong>
-
-    <small>
-     ${exam.questions.length} mintakérdés ·
-     határ ${PASS}%
-    </small>
-
-    <div class="progress">
-     <div style="width:${percent}%"></div>
-    </div>
-
-    ${data ?
-      `<div class="done">
-       ${percent >= PASS ? "TELJESÍTVE" : "EREDMÉNY"}
-       · ${percent}%
-      </div>` :
-      `<div class="lock">
-       ${open ? "Megnyitható" : "🔒 Előfeltétel szükséges"}
-      </div>`
-    }
-
-   </button>
-  `;
+  const data=progress[exam.id],percent=data?Math.max(0,Math.min(100,Number(data.percent)||0)):0,open=unlocked(exam);
+  return `<button type="button" class="exam" ${open?'':'disabled'} data-exam="${exam.id}">
+   <strong>✦ ${exam.name}</strong><small>${exam.questions.length} mintakérdés · határ ${PASS}%</small>
+   <div class="progress" aria-label="Korábbi eredmény"><div style="width:${percent}%"></div></div>
+   ${data?`<div class="done">${percent>=PASS?'TELJESÍTVE':'EREDMÉNY'} · ${percent}%</div>`:`<div class="lock">${open?'Megnyitható':'🔒 Előfeltétel szükséges'}</div>`}
+  </button>`;
  }
-
- document.getElementById("competency").innerHTML =
- exams.filter(e=>e.group==="competency")
- .map(card).join("");
-
- document.getElementById("additional").innerHTML =
- exams.filter(e=>e.group==="additional")
- .map(card).join("");
+ document.getElementById('competency').innerHTML=exams.filter(e=>e.group==='competency').map(card).join('');
+ document.getElementById('additional').innerHTML=exams.filter(e=>e.group==='additional').map(card).join('');
+ document.querySelectorAll('.exam[data-exam]').forEach(button=>button.addEventListener('click',()=>startExam(button.dataset.exam)));
 }
-
 function startExam(id){
-
- currentExam = exams.find(e=>e.id===id);
- questionIndex=0;
- score=0;
-
- document.getElementById("home")
- .classList.remove("active");
-
- document.getElementById("quiz")
- .classList.add("active");
-
- document.getElementById("quizName").textContent =
- currentExam.name;
-
- document.getElementById("quizInfo").textContent =
- "Gyakorlóteszt · 75%-os sikerességi határ";
-
- document.getElementById("resultArea").innerHTML="";
- document.getElementById("nextBtn").hidden=false;
-
+ const exam=exams.find(item=>item.id===id);
+ if(!exam||!unlocked(exam))return;
+ currentExam=exam;questionIndex=0;score=0;
+ document.getElementById('home').classList.remove('active');document.getElementById('quiz').classList.add('active');
+ document.getElementById('quizName').textContent=currentExam.name;
+ document.getElementById('quizInfo').textContent=`Gyakorlóteszt · ${PASS}%-os sikerességi határ`;
+ document.getElementById('resultArea').innerHTML='';document.getElementById('nextBtn').hidden=false;
  showQuestion();
 }
-
 function showQuestion(){
-
- selected=null;
-
- const q=currentExam.questions[questionIndex];
-
- document.getElementById("quizBar").style.width =
- (questionIndex/currentExam.questions.length*100)+"%";
-
- document.getElementById("questionArea").innerHTML=`
- <div class="question">
-  <small>KÉRDÉS ${questionIndex+1} / ${currentExam.questions.length}</small>
-
-  <h3>${q[0]}</h3>
-
-  ${q[1].map((answer,i)=>`
-   <button class="answer" onclick="choose(${i})">
-    ${String.fromCharCode(65+i)}. ${answer}
-   </button>
-  `).join("")}
- </div>
- `;
-
- document.getElementById("nextBtn").disabled=true;
-
- document.getElementById("nextBtn").textContent =
- questionIndex===currentExam.questions.length-1
- ? "Eredmény megtekintése"
- : "Következő kérdés";
+ selected=null;const question=currentExam.questions[questionIndex];
+ document.getElementById('quizBar').style.width=`${questionIndex/currentExam.questions.length*100}%`;
+ document.getElementById('questionArea').innerHTML=`<div class="question"><small>KÉRDÉS ${questionIndex+1} / ${currentExam.questions.length}</small><h3>${question[0]}</h3>${question[1].map((answer,index)=>`<button type="button" class="answer" data-answer="${index}">${String.fromCharCode(65+index)}. ${answer}</button>`).join('')}</div>`;
+ document.querySelectorAll('.answer').forEach(button=>button.addEventListener('click',()=>choose(Number(button.dataset.answer))));
+ const next=document.getElementById('nextBtn');next.disabled=true;next.textContent=questionIndex===currentExam.questions.length-1?'Eredmény megtekintése':'Következő kérdés';
 }
-
 function choose(index){
-
- selected=index;
-
- document.querySelectorAll(".answer")
- .forEach((button,i)=>{
-  button.classList.toggle("selected",i===index);
- });
-
- document.getElementById("nextBtn").disabled=false;
+ selected=index;document.querySelectorAll('.answer').forEach((button,i)=>button.classList.toggle('selected',i===index));document.getElementById('nextBtn').disabled=false;
 }
-
-document.getElementById("nextBtn").onclick=()=>{
-
- if(selected===null)return;
-
- if(selected===currentExam.questions[questionIndex][2]){
-  score++;
- }
-
+document.getElementById('nextBtn').addEventListener('click',()=>{
+ if(selected===null||!currentExam)return;
+ if(selected===currentExam.questions[questionIndex][2])score++;
  questionIndex++;
-
- if(questionIndex<currentExam.questions.length){
-  showQuestion();
- }else{
-  finishExam();
- }
-};
-
+ if(questionIndex<currentExam.questions.length)showQuestion();else finishExam();
+});
 function finishExam(){
-
- const total=currentExam.questions.length;
- const percent=Math.round(score/total*100);
- const success=percent>=PASS;
-
- progress[currentExam.id]={
-  percent:percent,
-  score:score,
-  total:total,
-  passed:success,
-  date:new Date().toISOString()
- };
-
- localStorage.setItem(
-  "emsProgress",
-  JSON.stringify(progress)
- );
-
- document.getElementById("quizBar").style.width="100%";
- document.getElementById("questionArea").innerHTML="";
- document.getElementById("nextBtn").hidden=true;
-
- document.getElementById("resultArea").innerHTML=`
-  <div class="result">
-
-   <h2>
-    ${success ? "Sikeres gyakorlóteszt!" :
-    "Most még nem sikerült!"}
-   </h2>
-
-   <strong>${percent}%</strong>
-
-   <p>
-    ${score} helyes válasz a ${total} kérdésből.
-   </p>
-
-   <p>
-    ${success ?
-    "A következő vizsgarész feloldható." :
-    "Próbáld meg újra a vizsgát."}
-   </p>
-
-   <button class="mainbtn" onclick="goHome()">
-    Vissza a vizsgaközponthoz
-   </button>
-
-  </div>
- `;
+ const total=currentExam.questions.length,percent=Math.round(score/total*100),success=percent>=PASS;
+ progress[currentExam.id]={percent,score,total,date:new Date().toISOString()};
+ try{localStorage.setItem('emsProgress',JSON.stringify(progress))}catch(error){/* A teszt mentés nélkül is használható. */}
+ document.getElementById('quizBar').style.width='100%';document.getElementById('questionArea').innerHTML='';document.getElementById('nextBtn').hidden=true;
+ document.getElementById('resultArea').innerHTML=`<div class="result"><h2>${success?'Sikeres gyakorlóteszt!':'Most még nem sikerült!'}</h2><strong>${percent}%</strong><p>${score} helyes válasz a ${total} kérdésből.</p><p>${success?'A következő vizsgarész feloldható.':'Próbáld meg újra a vizsgát.'}</p><button type="button" class="mainbtn" id="resultHomeBtn">Vissza a vizsgaközponthoz</button></div>`;
+ document.getElementById('resultHomeBtn').addEventListener('click',goHome);
 }
-
 function goHome(){
-
- document.getElementById("quiz")
- .classList.remove("active");
-
- document.getElementById("home")
- .classList.add("active");
-
- document.getElementById("nextBtn").hidden=false;
-
- renderCards();
+ document.getElementById('quiz').classList.remove('active');document.getElementById('home').classList.add('active');
+ document.getElementById('nextBtn').hidden=false;document.getElementById('resultArea').innerHTML='';document.getElementById('questionArea').innerHTML='';currentExam=null;renderCards();
 }
-
-document.getElementById("examTab").onclick=()=>{
- document.getElementById("examTab").classList.add("active");
- document.getElementById("gameTab").classList.remove("active");
- document.getElementById("examPage").hidden=false;
- document.getElementById("gamePage").hidden=true;
-};
-
-document.getElementById("gameTab").onclick=()=>{
- document.getElementById("gameTab").classList.add("active");
- document.getElementById("examTab").classList.remove("active");
- document.getElementById("examPage").hidden=true;
- document.getElementById("gamePage").hidden=false;
-};
-
+document.getElementById('backBtn').addEventListener('click',goHome);
+document.getElementById('examTab').addEventListener('click',()=>{
+ document.getElementById('examTab').classList.add('active');document.getElementById('gameTab').classList.remove('active');
+ document.getElementById('examTab').setAttribute('aria-pressed','true');document.getElementById('gameTab').setAttribute('aria-pressed','false');
+ document.getElementById('examPage').hidden=false;document.getElementById('gamePage').hidden=true;
+});
+document.getElementById('gameTab').addEventListener('click',()=>{
+ document.getElementById('gameTab').classList.add('active');document.getElementById('examTab').classList.remove('active');
+ document.getElementById('gameTab').setAttribute('aria-pressed','true');document.getElementById('examTab').setAttribute('aria-pressed','false');
+ document.getElementById('examPage').hidden=true;document.getElementById('gamePage').hidden=false;
+});
 renderCards();
 </script>
-
 </body>
 </html>
